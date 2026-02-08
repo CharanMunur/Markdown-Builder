@@ -1,0 +1,23 @@
+import React from "react";
+import Markdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
+import remarkGfm from "remark-gfm";
+import { ScrollArea } from "../ui/scroll-area";
+
+const PreviewPane = ({ value }) => {
+  return (
+    <ScrollArea className="markdown-preview w-1/2 h-full bg-card text-foreground">
+      <article className="markdown-body p-4 pb-4">
+        <Markdown
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeHighlight]}
+        >
+          {value}
+        </Markdown>
+      </article>
+    </ScrollArea>
+  );
+};
+
+export default PreviewPane;
+

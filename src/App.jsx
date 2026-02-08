@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import { Button } from "./components/ui/button";
-import ModeToggle from "./components/mode-toggle";
+import TopBar from "./components/header/topBar";
+import EditorPane from "./components/editor/EditorPane";
+import PreviewPane from "./components/preview/PreviewPane";
+import { Separator } from "./components/ui/separator";
 
 const App = () => {
-  const [count, setCount] = useState(0);
+  const [value, setValue] = useState("");
+
   return (
-    <div>
-      <ModeToggle />
-      <p>{count}</p>
-      <Button variant="default" onClick={() => setCount(count + 1)}>
-        Click me
-      </Button>
+    <div className="flex h-screen flex-col overflow-hidden">
+      <TopBar />
+      <Separator />
+      <div className="flex flex-1 min-h-0">
+        <EditorPane value={value} onChange={setValue} />
+        <PreviewPane value={value} />
+      </div>
     </div>
   );
 };

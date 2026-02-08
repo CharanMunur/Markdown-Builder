@@ -1,36 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import ModeToggle from "../mode-toggle";
 import { Button } from "../ui/button";
 import { Switch } from "../ui/switch";
-import { Clipboard, Download, RotateCcwIcon } from "lucide-react";
+import { Check, Copy, Download, RotateCcwIcon } from "lucide-react";
 import { FieldLabel } from "../ui/field";
+import { Spinner } from "../ui/spinner";
 
-const TopBar = () => {
+const TopBar = ({ value, onReset }) => {
+  const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const handleCopy = async () => {
+    const text = value ?? "";
+    if (!text) return;
+
+    if (navigator?.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(text);
+        setCopied(true);
+        setTimeout(() => {
+          setCopied(false);
+        }, 1200);
+        return;
+      } catch {}
+    }
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "true");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 1200);
+  };
+
   return (
-    <div className="sticky top-0 z-10 grid w-full grid-cols-[1fr_auto_1fr] items-center gap-3 border border-border bg-card/80 px-4 py-2 text-foreground shadow-sm backdrop-blur">
+    <div className="sticky top-0 z-10 flex w-full items-center justify-between border border-border bg-card/80 px-4 py-2 text-foreground shadow-sm backdrop-blur select-none">
       <div className="flex items-center gap-3">
-        <div className="text-2xl font-semibold tracking-wide">
+        <div className="text-2xl font-semibold tracking-wide select-none">
           &lt;Markdown Builder/&gt;
         </div>
       </div>
-      <div className="flex items-center gap-4 justify-self-center">
-        <Button variant="outline" size="sm">
-          <RotateCcwIcon />
-          Reset
-        </Button>
-        <Button variant="outline" size="sm">
-          <Clipboard />
-          Copy
-        </Button>
-        <Button variant="outline" size="sm">
-          <Download />
-          Export PDF
-        </Button>
-      </div>
-      <div className="flex items-center justify-self-end gap-3">
-        <FieldLabel htmlFor="switch-size-sm" className="text-sm">Sync Scroll</FieldLabel>
-        <Switch id="switch-size-sm"  />
-        <ModeToggle />
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={onReset}>
+            {loading ? <Spinner /> : <RotateCcwIcon />}
+            Reset
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleCopy}
+            disabled={!value}
+          >
+            {copied ? <Check /> : <Copy />}
+            {copied ? "Copied" : "Copy"}
+          </Button>
+          <Button variant="outline" size="sm">
+            <Download />
+            Export
+          </Button>
+        </div>
+        <div className="mx-1 h-6 w-px bg-border" />
+        <div className="flex items-center gap-3">
+          <FieldLabel htmlFor="switch-size-sm" className="text-sm">
+            Sync Scroll
+          </FieldLabel>
+          <Switch id="switch-size-sm" />
+          <ModeToggle />
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import TopBar from "./components/header/topBar";
+import TopBar from "./components/header/TopBar";
 import EditorPane from "./components/editor/EditorPane";
 import PreviewPane from "./components/preview/PreviewPane";
 import { Separator } from "./components/ui/separator";

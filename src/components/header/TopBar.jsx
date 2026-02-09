@@ -41,7 +41,7 @@ const TopBar = ({ value, onReset, previewRef, syncEnabled, onToggleSync }) => {
     <div className="sticky top-0 z-10 flex w-full items-center justify-between border border-border bg-card/80 px-4 py-2 text-foreground shadow-sm backdrop-blur select-none">
       <div className="flex items-center gap-3">
         <div className="text-2xl font-semibold tracking-wide select-none">
-          &lt;Markdown Builder/&gt;
+          &lt;Markdown Editor/&gt;
         </div>
       </div>
       <div className="flex items-center gap-3">

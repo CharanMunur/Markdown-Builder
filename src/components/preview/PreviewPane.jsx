@@ -4,10 +4,17 @@ import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import { ScrollArea } from "../ui/scroll-area";
 
-const PreviewPane = ({ value }) => {
+const PreviewPane = ({
+  value,
+  previewRef,
+  viewportRef,
+}) => {
   return (
-    <ScrollArea className="markdown-preview w-1/2 h-full bg-card text-foreground">
-      <article className="markdown-body p-4 pb-4">
+    <ScrollArea
+      className="markdown-preview w-1/2 h-full bg-card text-foreground"
+      viewportRef={viewportRef}
+    >
+      <article className="markdown-body p-4 pb-4" ref={previewRef}>
         <Markdown
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeHighlight]}
@@ -20,4 +27,3 @@ const PreviewPane = ({ value }) => {
 };
 
 export default PreviewPane;
-

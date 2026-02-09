@@ -4,11 +4,10 @@ import { Button } from "../ui/button";
 import { Switch } from "../ui/switch";
 import { Check, Copy, Download, RotateCcwIcon } from "lucide-react";
 import { FieldLabel } from "../ui/field";
-import { Spinner } from "../ui/spinner";
+import handleExport from "../export/HandleExport";
 
-const TopBar = ({ value, onReset }) => {
+const TopBar = ({ value, onReset, previewRef, syncEnabled, onToggleSync }) => {
   const [copied, setCopied] = useState(false);
-  const [loading, setLoading] = useState(false);
   const handleCopy = async () => {
     const text = value ?? "";
     if (!text) return;
@@ -48,7 +47,7 @@ const TopBar = ({ value, onReset }) => {
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={onReset}>
-            {loading ? <Spinner /> : <RotateCcwIcon />}
+            <RotateCcwIcon />
             Reset
           </Button>
           <Button
@@ -60,7 +59,11 @@ const TopBar = ({ value, onReset }) => {
             {copied ? <Check /> : <Copy />}
             {copied ? "Copied" : "Copy"}
           </Button>
-          <Button variant="outline" size="sm">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handleExport(previewRef)}
+          >
             <Download />
             Export
           </Button>
@@ -70,7 +73,11 @@ const TopBar = ({ value, onReset }) => {
           <FieldLabel htmlFor="switch-size-sm" className="text-sm">
             Sync Scroll
           </FieldLabel>
-          <Switch id="switch-size-sm" />
+          <Switch
+            id="switch-size-sm"
+            checked={syncEnabled}
+            onCheckedChange={onToggleSync}
+          />
           <ModeToggle />
         </div>
       </div>

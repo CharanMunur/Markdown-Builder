@@ -44,7 +44,7 @@ const EditorPane = ({ value, onChange, syncEnabled, onSyncScroll }) => {
   );
 
   return (
-    <div className="w-1/2 h-full">
+    <div className="h-full w-full">
       <Editor
         height="100%"
         width="100%"

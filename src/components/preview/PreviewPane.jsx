@@ -11,7 +11,7 @@ const PreviewPane = ({
 }) => {
   return (
     <ScrollArea
-      className="markdown-preview w-1/2 h-full bg-card text-foreground"
+      className="markdown-preview h-full w-full bg-card text-foreground"
       viewportRef={viewportRef}
     >
       <article className="markdown-body p-4 pb-4" ref={previewRef}>

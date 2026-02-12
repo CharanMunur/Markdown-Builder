@@ -5,6 +5,7 @@ import { Switch } from "../ui/switch";
 import { Check, Copy, Download, RotateCcwIcon } from "lucide-react";
 import { FieldLabel } from "../ui/field";
 import handleExport from "../export/HandleExport";
+import { ImGithub } from "react-icons/im";
 
 const TopBar = ({ value, onReset, previewRef, syncEnabled, onToggleSync }) => {
   const [copied, setCopied] = useState(false);
@@ -38,10 +39,17 @@ const TopBar = ({ value, onReset, previewRef, syncEnabled, onToggleSync }) => {
   };
 
   return (
-    <div className="sticky top-0 z-10 flex w-full items-center justify-between border border-border bg-card/80 px-4 py-2 text-foreground shadow-sm backdrop-blur select-none">
+    <div className="sticky top-0 z-10 flex w-full items-center justify-between border border-border bg-card/80 px-4 py-2 text-foreground backdrop-blur select-none">
       <div className="flex items-center gap-3">
-        <div className="text-2xl font-semibold tracking-wide select-none">
+        <div className="flex  items-center gap-3 text-2xl font-semibold tracking-wide select-none">
           &lt;Markdown Editor/&gt;
+          <a
+            href="https://github.com/CharanMunur/Markdown-Editor"
+            target="_black"
+            rel="Github source code"
+          >
+            <ImGithub />
+          </a>
         </div>
       </div>
       <div className="flex items-center gap-3">

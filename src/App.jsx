@@ -5,10 +5,20 @@ import PreviewPane from "./components/preview/PreviewPane";
 import { Separator } from "./components/ui/separator";
 import defaultMarkdown from "./assets/markdown.md?raw";
 
+const STORAGE_KEY = "markdown-editor:content";
+
 const App = () => {
   const MIN_EDITOR_WIDTH = 20;
   const MAX_EDITOR_WIDTH = 80;
-  const [value, setValue] = useState(defaultMarkdown);
+  const [value, setValue] = useState(() => {
+    if (typeof window === "undefined") return defaultMarkdown;
+    try {
+      const saved = window.localStorage.getItem(STORAGE_KEY);
+      return saved ?? defaultMarkdown;
+    } catch {
+      return defaultMarkdown;
+    }
+  });
   const [syncEnabled, setSyncEnabled] = useState(false);
   const [editorWidth, setEditorWidth] = useState(50);
   const [isResizing, setIsResizing] = useState(false);
@@ -70,6 +80,14 @@ const App = () => {
       document.body.style.userSelect = previousUserSelect;
     };
   }, [isResizing, updateWidthFromPointer]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, value ?? "");
+    } catch {
+      // Ignore storage failures
+    }
+  }, [value]);
 
   const handleEditorSync = (ratio) => {
     if (!syncEnabled) return;

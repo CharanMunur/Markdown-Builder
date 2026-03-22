@@ -112,7 +112,7 @@ const App = () => {
           aria-label="Resize panes"
           aria-orientation="vertical"
           onPointerDown={handleResizeStart}
-          className="group relative shrink-0 cursor-col-resize touch-none bg-background"
+          className="group relative w-2 shrink-0 cursor-col-resize touch-none bg-background"
         >
           <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-border" />
           <div className="absolute inset-y-0 left-1/2 w-1 -translate-x-1/2 bg-primary/30 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
